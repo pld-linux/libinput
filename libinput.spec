@@ -1,12 +1,12 @@
 Summary:	Input device library
 Summary(pl.UTF-8):	Biblioteka urządzeń wejściowych
 Name:		libinput
-Version:	0.2.0
+Version:	0.3.0
 Release:	1
 License:	MIT
 Group:		Libraries
 Source0:	http://www.freedesktop.org/software/libinput/%{name}-%{version}.tar.xz
-# Source0-md5:	76472cd9764ac40615442cb911c621a1
+# Source0-md5:	1ab74403a69538c35ed99c55b796a9dd
 URL:		http://www.freedesktop.org/wiki/Software/libinput/
 BuildRequires:	check-devel >= 0.9.9
 BuildRequires:	doxygen
@@ -101,7 +101,7 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %doc COPYING README
 %attr(755,root,root) %{_libdir}/libinput.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libinput.so.0
+%attr(755,root,root) %ghost %{_libdir}/libinput.so.2
 
 %files devel
 %defattr(644,root,root,755)
