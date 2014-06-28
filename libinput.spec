@@ -1,15 +1,22 @@
+#
+# Conditional build:
+%bcond_with	gui	# event-gui (noinst as of 0.4.0)
+#
 Summary:	Input device library
 Summary(pl.UTF-8):	Biblioteka urządzeń wejściowych
 Name:		libinput
-Version:	0.3.0
+Version:	0.4.0
 Release:	1
 License:	MIT
 Group:		Libraries
 Source0:	http://www.freedesktop.org/software/libinput/%{name}-%{version}.tar.xz
-# Source0-md5:	1ab74403a69538c35ed99c55b796a9dd
+# Source0-md5:	60969c60e11792fab4ecaa7222f43697
 URL:		http://www.freedesktop.org/wiki/Software/libinput/
+%{?with_gui:BuildRequires:	cairo-devel}
 BuildRequires:	check-devel >= 0.9.9
 BuildRequires:	doxygen
+%{?with_gui:BuildRequires:	glib2-devel >= 2.0}
+%{?with_gui:BuildRequires:	gtk+3-devel >= 3.0}
 BuildRequires:	libevdev-devel >= 0.4
 BuildRequires:	mtdev-devel >= 1.1.0
 BuildRequires:	pkgconfig
@@ -101,7 +108,7 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %doc COPYING README
 %attr(755,root,root) %{_libdir}/libinput.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libinput.so.2
+%attr(755,root,root) %ghost %{_libdir}/libinput.so.3
 
 %files devel
 %defattr(644,root,root,755)
