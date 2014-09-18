@@ -1,16 +1,17 @@
 #
 # Conditional build:
-%bcond_with	gui	# event-gui (noinst as of 0.4.0)
+%bcond_with	gui		# event-gui (noinst as of 0.4.0)
+%bcond_with	static_libs	# static library
 #
 Summary:	Input device library
 Summary(pl.UTF-8):	Biblioteka urządzeń wejściowych
 Name:		libinput
-Version:	0.5.0
+Version:	0.6.0
 Release:	1
 License:	MIT
 Group:		Libraries
 Source0:	http://www.freedesktop.org/software/libinput/%{name}-%{version}.tar.xz
-# Source0-md5:	9aeb2e44c0f5e13c8cf1ce6bcdf29e83
+# Source0-md5:	3afaf9f66d8796323a79edb879c10ba3
 URL:		http://www.freedesktop.org/wiki/Software/libinput/
 %{?with_gui:BuildRequires:	cairo-devel}
 BuildRequires:	check-devel >= 0.9.9
@@ -85,7 +86,8 @@ Dokumentacja API biblioteki libinput.
 
 %build
 %configure \
-	--disable-silent-rules
+	--disable-silent-rules \
+	%{?with_static_libs:--enable-static}
 
 %{__make}
 
@@ -108,7 +110,7 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %doc COPYING README
 %attr(755,root,root) %{_libdir}/libinput.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libinput.so.3
+%attr(755,root,root) %ghost %{_libdir}/libinput.so.5
 
 %files devel
 %defattr(644,root,root,755)
@@ -116,9 +118,11 @@ rm -rf $RPM_BUILD_ROOT
 %{_includedir}/libinput.h
 %{_pkgconfigdir}/libinput.pc
 
+%if %{with static_libs}
 %files static
 %defattr(644,root,root,755)
 %{_libdir}/libinput.a
+%endif
 
 %files apidocs
 %defattr(644,root,root,755)
