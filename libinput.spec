@@ -7,11 +7,18 @@ Summary:	Input device library
 Summary(pl.UTF-8):	Biblioteka urządzeń wejściowych
 Name:		libinput
 Version:	0.16.0
-Release:	1
+Release:	2
 License:	MIT
 Group:		Libraries
 Source0:	http://www.freedesktop.org/software/libinput/%{name}-%{version}.tar.xz
 # Source0-md5:	a5f5e1bb8eb2cd3bb9f5bd48f296def8
+Patch0:		0001-filter-pass-last_velocity-as-argument.patch
+Patch1:		0002-filter-up-the-motion-timeout-to-1-second.patch
+Patch2:		0003-filter-enforce-minimum-velocity.patch
+#Bug fc 1225998 - Tap-and-drag touchpad behavior not configurable
+Patch3:		0001-touchpad-reduce-tap-n-drag-timeout-to-300ms.patch
+# Bug fc 1227182 - Middle click pastes on button press instead of release
+Patch4:		0001-evdev-always-default-to-the-middle-button-for-button.patch
 URL:		http://www.freedesktop.org/wiki/Software/libinput/
 %{?with_gui:BuildRequires:	cairo-devel}
 BuildRequires:	check-devel >= 0.9.10
@@ -84,6 +91,11 @@ Dokumentacja API biblioteki libinput.
 
 %prep
 %setup -q
+%patch0 -p1
+%patch1 -p1
+%patch2 -p1
+%patch3 -p1
+%patch4 -p1
 
 %build
 %configure \

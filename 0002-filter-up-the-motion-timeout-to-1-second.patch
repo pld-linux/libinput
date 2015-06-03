@@ -1,0 +1,34 @@
+From a81051e5136aeb23ce0ed85e387ae2d9b9447faa Mon Sep 17 00:00:00 2001
+From: Peter Hutterer <peter.hutterer@who-t.net>
+Date: Wed, 22 Apr 2015 11:46:57 +1000
+Subject: [PATCH libinput 2/3] filter: up the motion timeout to 1 second
+
+This timeout defines how far back in the events we search for velocity
+calculations. For really slow movements, 300ms is not enough. It causes the
+velocity to be 0 -> accel factor of 0 -> no movement.
+As a result, really slow movement does not move the cursor.
+
+Up the timeout to 1 second instead.
+
+Signed-off-by: Peter Hutterer <peter.hutterer@who-t.net>
+Reviewed-by: Hans de Goede <hdegoede@redhat.com>
+---
+ src/filter.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/src/filter.c b/src/filter.c
+index fe86215..3845c7f 100644
+--- a/src/filter.c
++++ b/src/filter.c
+@@ -78,7 +78,7 @@ filter_get_speed(struct motion_filter *filter)
+  */
+ 
+ #define MAX_VELOCITY_DIFF	1.0 /* units/ms */
+-#define MOTION_TIMEOUT		300 /* (ms) */
++#define MOTION_TIMEOUT		1000 /* (ms) */
+ #define NUM_POINTER_TRACKERS	16
+ 
+ struct pointer_tracker {
+-- 
+2.4.1
+

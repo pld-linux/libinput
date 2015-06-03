@@ -1,0 +1,58 @@
+From 578c4e81c2606abb969972186b013f67fb152040 Mon Sep 17 00:00:00 2001
+From: Peter Hutterer <peter.hutterer@who-t.net>
+Date: Thu, 30 Apr 2015 15:23:34 +1000
+Subject: [PATCH libinput 1/3] filter: pass last_velocity as argument
+
+Let the caller set the various fields, here we just calculate stuff.
+No functional changes.
+
+Signed-off-by: Peter Hutterer <peter.hutterer@who-t.net>
+Reviewed-by: Hans de Goede <hdegoede@redhat.com>
+---
+ src/filter.c | 15 +++++++++++----
+ 1 file changed, 11 insertions(+), 4 deletions(-)
+
+diff --git a/src/filter.c b/src/filter.c
+index 0cdcb63..fe86215 100644
+--- a/src/filter.c
++++ b/src/filter.c
+@@ -197,17 +197,20 @@ acceleration_profile(struct pointer_accelerator *accel,
+ 
+ static double
+ calculate_acceleration(struct pointer_accelerator *accel,
+-		       void *data, double velocity, uint64_t time)
++		       void *data,
++		       double velocity,
++		       double last_velocity,
++		       uint64_t time)
+ {
+ 	double factor;
+ 
+ 	/* Use Simpson's rule to calculate the avarage acceleration between
+ 	 * the previous motion and the most recent. */
+ 	factor = acceleration_profile(accel, data, velocity, time);
+-	factor += acceleration_profile(accel, data, accel->last_velocity, time);
++	factor += acceleration_profile(accel, data, last_velocity, time);
+ 	factor += 4.0 *
+ 		acceleration_profile(accel, data,
+-				     (accel->last_velocity + velocity) / 2,
++				     (last_velocity + velocity) / 2,
+ 				     time);
+ 
+ 	factor = factor / 6.0;
+@@ -228,7 +231,11 @@ accelerator_filter(struct motion_filter *filter,
+ 
+ 	feed_trackers(accel, unaccelerated, time);
+ 	velocity = calculate_velocity(accel, time);
+-	accel_value = calculate_acceleration(accel, data, velocity, time);
++	accel_value = calculate_acceleration(accel,
++					     data,
++					     velocity,
++					     accel->last_velocity,
++					     time);
+ 
+ 	accelerated.x = accel_value * unaccelerated->x;
+ 	accelerated.y = accel_value * unaccelerated->y;
+-- 
+2.4.1
+

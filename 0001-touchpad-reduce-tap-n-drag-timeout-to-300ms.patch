@@ -1,0 +1,32 @@
+From b8518f8f7c1611c58badb9d73e66d9c722849b55 Mon Sep 17 00:00:00 2001
+From: Peter Hutterer <peter.hutterer@who-t.net>
+Date: Tue, 2 Jun 2015 13:04:44 +1000
+Subject: [PATCH libinput] touchpad: reduce tap-n-drag timeout to 300ms
+
+The current 500ms is too long, reduce it to 300ms instead. This is still long
+enough to get multiple movements but not that long that it feels like the
+button is stuck.
+
+https://bugs.freedesktop.org/show_bug.cgi?id=90613
+
+Signed-off-by: Peter Hutterer <peter.hutterer@who-t.net>
+---
+ src/evdev-mt-touchpad-tap.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/src/evdev-mt-touchpad-tap.c b/src/evdev-mt-touchpad-tap.c
+index 55b7916..b51f083 100644
+--- a/src/evdev-mt-touchpad-tap.c
++++ b/src/evdev-mt-touchpad-tap.c
+@@ -37,7 +37,7 @@
+ #define CASE_RETURN_STRING(a) case a: return #a
+ 
+ #define DEFAULT_TAP_TIMEOUT_PERIOD 180
+-#define DEFAULT_DRAG_TIMEOUT_PERIOD 500
++#define DEFAULT_DRAG_TIMEOUT_PERIOD 300
+ #define DEFAULT_TAP_MOVE_THRESHOLD TP_MM_TO_DPI_NORMALIZED(3)
+ 
+ enum tap_event {
+-- 
+2.4.1
+
