@@ -6,12 +6,12 @@
 Summary:	Input device library
 Summary(pl.UTF-8):	Biblioteka urządzeń wejściowych
 Name:		libinput
-Version:	0.18.0
+Version:	0.19.0
 Release:	1
 License:	MIT
 Group:		Libraries
 Source0:	http://www.freedesktop.org/software/libinput/%{name}-%{version}.tar.xz
-# Source0-md5:	0ddbb0d53d58dec0a86de6791560011a
+# Source0-md5:	ddb2c98687c2b9766a9757fd6ec90753
 URL:		http://www.freedesktop.org/wiki/Software/libinput/
 %{?with_gui:BuildRequires:	cairo-devel}
 BuildRequires:	check-devel >= 0.9.10
