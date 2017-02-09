@@ -6,12 +6,12 @@
 Summary:	Input device library
 Summary(pl.UTF-8):	Biblioteka urządzeń wejściowych
 Name:		libinput
-Version:	1.5.3
+Version:	1.6.1
 Release:	1
 License:	MIT
 Group:		Libraries
 Source0:	https://www.freedesktop.org/software/libinput/%{name}-%{version}.tar.xz
-# Source0-md5:	5df5e7f1a693bf74bbab0c804d1b710b
+# Source0-md5:	7e282344f8ed7ec5cf87ca9fc22674fb
 URL:		https://www.freedesktop.org/wiki/Software/libinput/
 %{?with_gui:BuildRequires:	cairo-devel}
 BuildRequires:	check-devel >= 0.9.10
@@ -20,10 +20,13 @@ BuildRequires:	doxygen >= 1.6.0
 BuildRequires:	graphviz >= 2.26.0
 %{?with_gui:BuildRequires:	gtk+3-devel >= 3.0}
 BuildRequires:	libevdev-devel >= 0.4
-BuildRequires:	libwacom-devel >= 0.12
+BuildRequires:	libwacom-devel >= 0.20
 BuildRequires:	mtdev-devel >= 1.1.0
 BuildRequires:	pkgconfig
 BuildRequires:	udev-devel
+Requires:	libevdev >= 0.4
+Requires:	libwacom >= 0.20
+Requires:	mtdev >= 1.1.0
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
