@@ -2,6 +2,7 @@
 # Conditional build:
 %bcond_with	gui		# event-gui (noinst as of 0.4.0)
 %bcond_with	static_libs	# static library
+%bcond_without	doc		# documentation
 
 Summary:	Input device library
 Summary(pl.UTF-8):	Biblioteka urządzeń wejściowych
@@ -13,12 +14,16 @@ Group:		Libraries
 Source0:	https://www.freedesktop.org/software/libinput/%{name}-%{version}.tar.xz
 # Source0-md5:	62f4a283925ac7ebe6cc59884801aa69
 URL:		https://www.freedesktop.org/wiki/Software/libinput/
-%{?with_gui:BuildRequires:	cairo-devel}
 BuildRequires:	check-devel >= 0.9.10
+%if %{with gui}
+BuildRequires:	cairo-devel
+BuildRequires:	glib2-devel >= 2.0
+BuildRequires:	gtk+3-devel >= 3.0
+%endif
+%if %{with apidocs}
 BuildRequires:	doxygen >= 1.6.0
-%{?with_gui:BuildRequires:	glib2-devel >= 2.0}
 BuildRequires:	graphviz >= 2.26.0
-%{?with_gui:BuildRequires:	gtk+3-devel >= 3.0}
+%endif
 BuildRequires:	libevdev-devel >= 0.4
 BuildRequires:	libwacom-devel >= 0.20
 BuildRequires:	mtdev-devel >= 1.1.0
@@ -96,6 +101,7 @@ Dokumentacja API biblioteki libinput.
 %configure \
 	--disable-silent-rules \
 	%{?with_static_libs:--enable-static} \
+	--%{?with_doc:en}%{!?with_doc:dis}able-documentation \
 	--with-udev-dir=/lib/udev
 
 %{__make}
