@@ -1,18 +1,18 @@
 #
 # Conditional build:
-%bcond_with	gui		# event-gui (noinst as of 0.4.0)
+%bcond_without	gui		# libinput-debug-gui
 %bcond_with	static_libs	# static library
 %bcond_without	doc		# documentation
 
 Summary:	Input device library
 Summary(pl.UTF-8):	Biblioteka urządzeń wejściowych
 Name:		libinput
-Version:	1.7.2
+Version:	1.8.0
 Release:	1
 License:	MIT
 Group:		Libraries
 Source0:	https://www.freedesktop.org/software/libinput/%{name}-%{version}.tar.xz
-# Source0-md5:	d138d62c528fbf9aba300a97bae453cb
+# Source0-md5:	f12066eeda3e1aeaa65eeca4b9ad833d
 URL:		https://www.freedesktop.org/wiki/Software/libinput/
 BuildRequires:	check-devel >= 0.9.10
 %if %{with gui}
@@ -24,12 +24,12 @@ BuildRequires:	gtk+3-devel >= 3.0
 BuildRequires:	doxygen >= 1.6.0
 BuildRequires:	graphviz >= 2.26.0
 %endif
-BuildRequires:	libevdev-devel >= 0.4
+BuildRequires:	libevdev-devel >= 1.3
 BuildRequires:	libwacom-devel >= 0.20
 BuildRequires:	mtdev-devel >= 1.1.0
 BuildRequires:	pkgconfig
 BuildRequires:	udev-devel
-Requires:	libevdev >= 0.4
+Requires:	libevdev >= 1.3
 Requires:	libwacom >= 0.20
 Requires:	mtdev >= 1.1.0
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
@@ -52,6 +52,18 @@ Biblioteka zapewnia wykrywanie urządzeń, obsługę urządzeń,
 przetwarzanie zdarzeń urządzeń wejściowych oraz abstrakcję,
 minimalizując ilość własnego kodu, który musi napisać użytkownik
 biblioteki, aby zapewnić oczekiwaną funkcjonalność.
+
+%package gui
+Summary:	Debugging GUI for libinput
+Summary(pl.UTF-8):	Graficzny interfejs diagnostyczny do libinput
+Group:		X11/Applications
+Requires:	%{name} = %{version}-%{release}
+
+%description gui
+Debugging GUI for libinput.
+
+%description gui -l pl.UTF-8
+Graficzny interfejs diagnostyczny do libinput.
 
 %package devel
 Summary:	Development files for libinput
@@ -99,9 +111,10 @@ Dokumentacja API biblioteki libinput.
 
 %build
 %configure \
+	%{!?with_gui:--disable-debug-gui} \
 	--disable-silent-rules \
+	--enable-documentation%{!?with_doc:=no} \
 	%{?with_static_libs:--enable-static} \
-	--%{?with_doc:en}%{!?with_doc:dis}able-documentation \
 	--with-udev-dir=/lib/udev
 
 %{__make}
@@ -123,18 +136,34 @@ rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
-%doc COPYING README.txt
+%doc COPYING README.md
+%attr(755,root,root) %{_bindir}/libinput
 %attr(755,root,root) %{_bindir}/libinput-debug-events
 %attr(755,root,root) %{_bindir}/libinput-list-devices
 %attr(755,root,root) %{_libdir}/libinput.so.*.*.*
 %attr(755,root,root) %ghost %{_libdir}/libinput.so.10
+%dir %{_libexecdir}/libinput
+%attr(755,root,root) %{_libexecdir}/libinput/libinput-debug-events
+%attr(755,root,root) %{_libexecdir}/libinput/libinput-list-devices
+%attr(755,root,root) %{_libexecdir}/libinput/libinput-measure
+%attr(755,root,root) %{_libexecdir}/libinput/libinput-measure-touchpad-tap
 %attr(755,root,root) /lib/udev/libinput-device-group
 %attr(755,root,root) /lib/udev/libinput-model-quirks
 /lib/udev/rules.d/80-libinput-device-groups.rules
 /lib/udev/hwdb.d/90-libinput-model-quirks.hwdb
 /lib/udev/rules.d/90-libinput-model-quirks.rules
+%{_mandir}/man1/libinput.1*
 %{_mandir}/man1/libinput-debug-events.1*
 %{_mandir}/man1/libinput-list-devices.1*
+%{_mandir}/man1/libinput-measure.1*
+%{_mandir}/man1/libinput-measure-touchpad-tap.1*
+
+%if %{with gui}
+%files gui
+%defattr(644,root,root,755)
+%attr(755,root,root) %{_libexecdir}/libinput/libinput-debug-gui
+%{_mandir}/man1/libinput-debug-gui.1*
+%endif
 
 %files devel
 %defattr(644,root,root,755)
