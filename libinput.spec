@@ -1,14 +1,18 @@
 #
 # Conditional build:
 %bcond_without	gui		# libinput-debug-gui
+%bcond_without	libunwind	# libunwind debugging support
 %bcond_with	static_libs	# static library
 %bcond_without	doc		# documentation
 
+%ifnarch %{ix86} %{x8664} %{arm} hppa ia64 mips ppc ppc64 sh
+%undefine	with_libunwind
+%endif
 Summary:	Input device library
 Summary(pl.UTF-8):	Biblioteka urządzeń wejściowych
 Name:		libinput
 Version:	1.8.0
-Release:	1
+Release:	2
 License:	MIT
 Group:		Libraries
 Source0:	https://www.freedesktop.org/software/libinput/%{name}-%{version}.tar.xz
@@ -25,6 +29,7 @@ BuildRequires:	doxygen >= 1.6.0
 BuildRequires:	graphviz >= 2.26.0
 %endif
 BuildRequires:	libevdev-devel >= 1.3
+%{?with_libunwind:BuildRequires:	libunwind-devel}
 BuildRequires:	libwacom-devel >= 0.20
 BuildRequires:	mtdev-devel >= 1.1.0
 BuildRequires:	pkgconfig
@@ -115,6 +120,7 @@ Dokumentacja API biblioteki libinput.
 	--disable-silent-rules \
 	--enable-documentation%{!?with_doc:=no} \
 	%{?with_static_libs:--enable-static} \
+	%{!?with_libunwind:--without-libunwind} \
 	--with-udev-dir=/lib/udev
 
 %{__make}
