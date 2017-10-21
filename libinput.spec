@@ -4,6 +4,7 @@
 %bcond_without	libunwind	# libunwind debugging support
 %bcond_with	static_libs	# static library
 %bcond_without	doc		# documentation
+%bcond_without	tests		# tests
 
 %ifnarch %{ix86} %{x8664} %{arm} hppa ia64 mips ppc ppc64 sh
 %undefine	with_libunwind
@@ -11,12 +12,12 @@
 Summary:	Input device library
 Summary(pl.UTF-8):	Biblioteka urządzeń wejściowych
 Name:		libinput
-Version:	1.8.2
+Version:	1.9.0
 Release:	1
 License:	MIT
 Group:		Libraries
 Source0:	https://www.freedesktop.org/software/libinput/%{name}-%{version}.tar.xz
-# Source0-md5:	e94e9aa765da9533c23b80b440638de9
+# Source0-md5:	b33b5505f639bf01a6e2e3a01892e91f
 URL:		https://www.freedesktop.org/wiki/Software/libinput/
 BuildRequires:	check-devel >= 0.9.10
 %if %{with gui}
@@ -31,8 +32,10 @@ BuildRequires:	graphviz >= 2.26.0
 BuildRequires:	libevdev-devel >= 1.3
 %{?with_libunwind:BuildRequires:	libunwind-devel}
 BuildRequires:	libwacom-devel >= 0.20
+BuildRequires:	meson
 BuildRequires:	mtdev-devel >= 1.1.0
 BuildRequires:	pkgconfig
+BuildRequires:	rpmbuild(macros) >= 1.726
 BuildRequires:	udev-devel
 Requires:	libevdev >= 1.3
 Requires:	libwacom >= 0.20
@@ -115,24 +118,19 @@ Dokumentacja API biblioteki libinput.
 %setup -q
 
 %build
-%configure \
-	%{!?with_gui:--disable-debug-gui} \
-	--disable-silent-rules \
-	--enable-documentation%{!?with_doc:=no} \
-	%{?with_static_libs:--enable-static} \
-	%{!?with_libunwind:--without-libunwind} \
-	--with-udev-dir=/lib/udev
+%meson \
+	-Ddebug-gui=%{?with_gui:true}%{!?with_gui:false} \
+	-Ddocumentation=%{?with_doc:true}%{!?with_doc:false} \
+	-Dudev-dir=/lib/udev \
+	. build
+%meson_build -C build
 
-%{__make}
+%{?with_tests:%meson_test -C build}
 
 %install
 rm -rf $RPM_BUILD_ROOT
 
-%{__make} install \
-	DESTDIR=$RPM_BUILD_ROOT
-
-# obsoleted by pkg-config
-%{__rm} $RPM_BUILD_ROOT%{_libdir}/lib*.la
+%meson_install -C build
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -152,7 +150,10 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_libexecdir}/libinput/libinput-debug-events
 %attr(755,root,root) %{_libexecdir}/libinput/libinput-list-devices
 %attr(755,root,root) %{_libexecdir}/libinput/libinput-measure
+%attr(755,root,root) %{_libexecdir}/libinput/libinput-measure-touchpad-pressure
 %attr(755,root,root) %{_libexecdir}/libinput/libinput-measure-touchpad-tap
+%attr(755,root,root) %{_libexecdir}/libinput/libinput-measure-touch-size
+%attr(755,root,root) %{_libexecdir}/libinput/libinput-measure-trackpoint-range
 %attr(755,root,root) /lib/udev/libinput-device-group
 %attr(755,root,root) /lib/udev/libinput-model-quirks
 /lib/udev/rules.d/80-libinput-device-groups.rules
@@ -162,7 +163,10 @@ rm -rf $RPM_BUILD_ROOT
 %{_mandir}/man1/libinput-debug-events.1*
 %{_mandir}/man1/libinput-list-devices.1*
 %{_mandir}/man1/libinput-measure.1*
+%{_mandir}/man1/libinput-measure-touchpad-pressure.1*
 %{_mandir}/man1/libinput-measure-touchpad-tap.1*
+%{_mandir}/man1/libinput-measure-touch-size.1*
+%{_mandir}/man1/libinput-measure-trackpoint-range.1*
 
 %if %{with gui}
 %files gui
@@ -185,4 +189,4 @@ rm -rf $RPM_BUILD_ROOT
 
 %files apidocs
 %defattr(644,root,root,755)
-%doc doc/html/*
+%doc build/html/*
