@@ -35,7 +35,7 @@ BuildRequires:	libwacom-devel >= 0.20
 BuildRequires:	meson
 BuildRequires:	mtdev-devel >= 1.1.0
 BuildRequires:	pkgconfig
-BuildRequires:	rpmbuild(macros) >= 1.726
+BuildRequires:	rpmbuild(macros) >= 1.728
 BuildRequires:	udev-devel
 Requires:	libevdev >= 1.3
 Requires:	libwacom >= 0.20
@@ -119,8 +119,8 @@ Dokumentacja API biblioteki libinput.
 
 %build
 %meson build \
-	-Ddebug-gui=%{?with_gui:true}%{!?with_gui:false} \
-	-Ddocumentation=%{?with_doc:true}%{!?with_doc:false} \
+	-Ddebug-gui=%{__true_false gui} \
+	-Ddocumentation=%{__true_false doc} \
 	-Dudev-dir=/lib/udev
 %meson_build -C build
 
