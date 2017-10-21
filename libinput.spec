@@ -118,11 +118,10 @@ Dokumentacja API biblioteki libinput.
 %setup -q
 
 %build
-%meson \
+%meson build \
 	-Ddebug-gui=%{?with_gui:true}%{!?with_gui:false} \
 	-Ddocumentation=%{?with_doc:true}%{!?with_doc:false} \
-	-Dudev-dir=/lib/udev \
-	. build
+	-Dudev-dir=/lib/udev
 %meson_build -C build
 
 %{?with_tests:%meson_test -C build}
