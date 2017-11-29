@@ -12,27 +12,27 @@
 Summary:	Input device library
 Summary(pl.UTF-8):	Biblioteka urządzeń wejściowych
 Name:		libinput
-Version:	1.9.2
+Version:	1.9.3
 Release:	1
 License:	MIT
 Group:		Libraries
 Source0:	https://www.freedesktop.org/software/libinput/%{name}-%{version}.tar.xz
-# Source0-md5:	6c648d6b6e92ead89db129d6f5de8041
+# Source0-md5:	8136266444de2062e4cf2f02de40499b
 URL:		https://www.freedesktop.org/wiki/Software/libinput/
 BuildRequires:	check-devel >= 0.9.10
 %if %{with gui}
 BuildRequires:	cairo-devel
 BuildRequires:	glib2-devel >= 2.0
-BuildRequires:	gtk+3-devel >= 3.0
+BuildRequires:	gtk+3-devel >= 3.20
 %endif
 %if %{with apidocs}
-BuildRequires:	doxygen >= 1.6.0
+BuildRequires:	doxygen >= 1.8.3
 BuildRequires:	graphviz >= 2.26.0
 %endif
 BuildRequires:	libevdev-devel >= 1.3
 %{?with_libunwind:BuildRequires:	libunwind-devel}
 BuildRequires:	libwacom-devel >= 0.20
-BuildRequires:	meson
+BuildRequires:	meson >= 0.40.0
 BuildRequires:	mtdev-devel >= 1.1.0
 BuildRequires:	pkgconfig
 BuildRequires:	rpmbuild(macros) >= 1.728
@@ -66,6 +66,7 @@ Summary:	Debugging GUI for libinput
 Summary(pl.UTF-8):	Graficzny interfejs diagnostyczny do libinput
 Group:		X11/Applications
 Requires:	%{name} = %{version}-%{release}
+Requires:	gtk+3 >= 3.20
 
 %description gui
 Debugging GUI for libinput.
