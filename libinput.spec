@@ -25,7 +25,7 @@ BuildRequires:	cairo-devel
 BuildRequires:	glib2-devel >= 2.0
 BuildRequires:	gtk+3-devel >= 3.20
 %endif
-%if %{with apidocs}
+%if %{with doc}
 BuildRequires:	doxygen >= 1.8.3
 BuildRequires:	graphviz >= 2.26.0
 %endif
@@ -34,9 +34,11 @@ BuildRequires:	libevdev-devel >= 1.3
 BuildRequires:	libwacom-devel >= 0.20
 BuildRequires:	meson >= 0.40.0
 BuildRequires:	mtdev-devel >= 1.1.0
+BuildRequires:	ninja >= 1.5
 BuildRequires:	pkgconfig
 BuildRequires:	rpmbuild(macros) >= 1.728
 BuildRequires:	udev-devel
+BuildRequires:	valgrind
 Requires:	libevdev >= 1.3
 Requires:	libwacom >= 0.20
 Requires:	mtdev >= 1.1.0
@@ -189,6 +191,8 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/libinput.a
 %endif
 
+%if %{with doc}
 %files apidocs
 %defattr(644,root,root,755)
 %doc build/html/*
+%endif
