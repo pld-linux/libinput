@@ -2,7 +2,6 @@
 # Conditional build:
 %bcond_without	gui		# libinput-debug-gui
 %bcond_without	libunwind	# libunwind debugging support
-%bcond_with	static_libs	# static library
 %bcond_without	doc		# documentation
 %bcond_without	tests		# tests
 
@@ -184,12 +183,6 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_libdir}/libinput.so
 %{_includedir}/libinput.h
 %{_pkgconfigdir}/libinput.pc
-
-%if %{with static_libs}
-%files static
-%defattr(644,root,root,755)
-%{_libdir}/libinput.a
-%endif
 
 %if %{with doc}
 %files apidocs
