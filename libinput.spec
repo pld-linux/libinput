@@ -11,12 +11,12 @@
 Summary:	Input device library
 Summary(pl.UTF-8):	Biblioteka urządzeń wejściowych
 Name:		libinput
-Version:	1.10.7
+Version:	1.11.0
 Release:	1
 License:	MIT
 Group:		Libraries
 Source0:	https://www.freedesktop.org/software/libinput/%{name}-%{version}.tar.xz
-# Source0-md5:	4369212564f8359f48c8f683c8c829b5
+# Source0-md5:	a182dab52f4d33bc1ef50668dcf53cc6
 URL:		https://www.freedesktop.org/wiki/Software/libinput/
 BuildRequires:	check-devel >= 0.9.10
 %if %{with gui}
@@ -145,18 +145,19 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %doc COPYING README.md
 %attr(755,root,root) %{_bindir}/libinput
-%attr(755,root,root) %{_bindir}/libinput-debug-events
-%attr(755,root,root) %{_bindir}/libinput-list-devices
 %attr(755,root,root) %{_libdir}/libinput.so.*.*.*
 %attr(755,root,root) %ghost %{_libdir}/libinput.so.10
 %dir %{_libexecdir}/libinput
 %attr(755,root,root) %{_libexecdir}/libinput/libinput-debug-events
 %attr(755,root,root) %{_libexecdir}/libinput/libinput-list-devices
 %attr(755,root,root) %{_libexecdir}/libinput/libinput-measure
+%attr(755,root,root) %{_libexecdir}/libinput/libinput-measure-fuzz
 %attr(755,root,root) %{_libexecdir}/libinput/libinput-measure-touchpad-pressure
 %attr(755,root,root) %{_libexecdir}/libinput/libinput-measure-touchpad-tap
 %attr(755,root,root) %{_libexecdir}/libinput/libinput-measure-touch-size
 %attr(755,root,root) %{_libexecdir}/libinput/libinput-measure-trackpoint-range
+%attr(755,root,root) %{_libexecdir}/libinput/libinput-record
+%attr(755,root,root) %{_libexecdir}/libinput/libinput-replay
 %attr(755,root,root) /lib/udev/libinput-device-group
 %attr(755,root,root) /lib/udev/libinput-model-quirks
 /lib/udev/rules.d/80-libinput-device-groups.rules
@@ -166,10 +167,13 @@ rm -rf $RPM_BUILD_ROOT
 %{_mandir}/man1/libinput-debug-events.1*
 %{_mandir}/man1/libinput-list-devices.1*
 %{_mandir}/man1/libinput-measure.1*
+%{_mandir}/man1/libinput-measure-fuzz.1*
 %{_mandir}/man1/libinput-measure-touchpad-pressure.1*
 %{_mandir}/man1/libinput-measure-touchpad-tap.1*
 %{_mandir}/man1/libinput-measure-touch-size.1*
 %{_mandir}/man1/libinput-measure-trackpoint-range.1*
+%{_mandir}/man1/libinput-record.1*
+%{_mandir}/man1/libinput-replay.1*
 
 %if %{with gui}
 %files gui
