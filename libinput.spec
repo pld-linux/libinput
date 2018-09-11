@@ -1,3 +1,5 @@
+# TODO:
+# - package user docs from build/Documentation
 #
 # Conditional build:
 %bcond_without	gui		# libinput-debug-gui
@@ -11,12 +13,12 @@
 Summary:	Input device library
 Summary(pl.UTF-8):	Biblioteka urządzeń wejściowych
 Name:		libinput
-Version:	1.11.3
+Version:	1.12.0
 Release:	1
 License:	MIT
 Group:		Libraries
 Source0:	https://www.freedesktop.org/software/libinput/%{name}-%{version}.tar.xz
-# Source0-md5:	df6e877f11de4a9793511e9abfe7ef01
+# Source0-md5:	efbea0deaa7126b6d1f8cbbe16c0470a
 URL:		https://www.freedesktop.org/wiki/Software/libinput/
 BuildRequires:	check-devel >= 0.9.10
 %if %{with gui}
@@ -27,6 +29,9 @@ BuildRequires:	gtk+3-devel >= 3.20
 %if %{with doc}
 BuildRequires:	doxygen >= 1.8.3
 BuildRequires:	graphviz >= 2.26.0
+BuildRequires:	python3-recommonmark
+BuildRequires:	python3-sphinx_rtd_theme
+BuildRequires:	sphinx-pdg-3
 %endif
 BuildRequires:	libevdev-devel >= 1.3
 %{?with_libunwind:BuildRequires:	libunwind-devel}
@@ -119,7 +124,7 @@ Dokumentacja API biblioteki libinput.
 %prep
 %setup -q
 
-%{__sed} -i -e '1s,/usr/bin/env python3,%{__python3},' tools/libinput-measure-{trackpoint-range,touchpad-pressure,touch-size,touchpad-tap}
+%{__sed} -i -e '1s,/usr/bin/env python3,%{__python3},' tools/libinput-measure-{touchpad-pressure,touch-size,touchpad-tap}.py
 
 %build
 %meson build \
@@ -155,14 +160,15 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_libexecdir}/libinput/libinput-measure-touchpad-pressure
 %attr(755,root,root) %{_libexecdir}/libinput/libinput-measure-touchpad-tap
 %attr(755,root,root) %{_libexecdir}/libinput/libinput-measure-touch-size
-%attr(755,root,root) %{_libexecdir}/libinput/libinput-measure-trackpoint-range
+%attr(755,root,root) %{_libexecdir}/libinput/libinput-quirks
 %attr(755,root,root) %{_libexecdir}/libinput/libinput-record
 %attr(755,root,root) %{_libexecdir}/libinput/libinput-replay
 %attr(755,root,root) /lib/udev/libinput-device-group
 %attr(755,root,root) /lib/udev/libinput-model-quirks
 /lib/udev/rules.d/80-libinput-device-groups.rules
-/lib/udev/hwdb.d/90-libinput-model-quirks.hwdb
 /lib/udev/rules.d/90-libinput-model-quirks.rules
+%dir %{_datadir}/libinput
+%{_datadir}/libinput/*.quirks
 %{_mandir}/man1/libinput.1*
 %{_mandir}/man1/libinput-debug-events.1*
 %{_mandir}/man1/libinput-list-devices.1*
@@ -171,7 +177,9 @@ rm -rf $RPM_BUILD_ROOT
 %{_mandir}/man1/libinput-measure-touchpad-pressure.1*
 %{_mandir}/man1/libinput-measure-touchpad-tap.1*
 %{_mandir}/man1/libinput-measure-touch-size.1*
-%{_mandir}/man1/libinput-measure-trackpoint-range.1*
+%{_mandir}/man1/libinput-quirks.1*
+%{_mandir}/man1/libinput-quirks-list.1*
+%{_mandir}/man1/libinput-quirks-validate.1*
 %{_mandir}/man1/libinput-record.1*
 %{_mandir}/man1/libinput-replay.1*
 
@@ -191,5 +199,5 @@ rm -rf $RPM_BUILD_ROOT
 %if %{with doc}
 %files apidocs
 %defattr(644,root,root,755)
-%doc build/html/*
+%doc build/api/*
 %endif
