@@ -19,6 +19,7 @@ License:	MIT
 Group:		Libraries
 Source0:	https://www.freedesktop.org/software/libinput/%{name}-%{version}.tar.xz
 # Source0-md5:	efbea0deaa7126b6d1f8cbbe16c0470a
+Patch0:		32bit.patch
 URL:		https://www.freedesktop.org/wiki/Software/libinput/
 BuildRequires:	check-devel >= 0.9.10
 %if %{with gui}
@@ -123,6 +124,7 @@ Dokumentacja API biblioteki libinput.
 
 %prep
 %setup -q
+%patch0 -p1
 
 %{__sed} -i -e '1s,/usr/bin/env python3,%{__python3},' tools/libinput-measure-{touchpad-pressure,touch-size,touchpad-tap}.py
 
