@@ -13,13 +13,12 @@
 Summary:	Input device library
 Summary(pl.UTF-8):	Biblioteka urządzeń wejściowych
 Name:		libinput
-Version:	1.12.0
+Version:	1.12.1
 Release:	1
 License:	MIT
 Group:		Libraries
 Source0:	https://www.freedesktop.org/software/libinput/%{name}-%{version}.tar.xz
-# Source0-md5:	efbea0deaa7126b6d1f8cbbe16c0470a
-Patch0:		32bit.patch
+# Source0-md5:	0b6fff34e30cf7aafc33c8f884806960
 URL:		https://www.freedesktop.org/wiki/Software/libinput/
 BuildRequires:	check-devel >= 0.9.10
 %if %{with gui}
@@ -124,7 +123,6 @@ Dokumentacja API biblioteki libinput.
 
 %prep
 %setup -q
-%patch0 -p1
 
 %{__sed} -i -e '1s,/usr/bin/env python3,%{__python3},' tools/libinput-measure-{touchpad-pressure,touch-size,touchpad-tap}.py
 
