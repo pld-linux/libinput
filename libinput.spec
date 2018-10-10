@@ -21,6 +21,16 @@ Source0:	https://www.freedesktop.org/software/libinput/%{name}-%{version}.tar.xz
 # Source0-md5:	0b6fff34e30cf7aafc33c8f884806960
 URL:		https://www.freedesktop.org/wiki/Software/libinput/
 BuildRequires:	check-devel >= 0.9.10
+BuildRequires:	libevdev-devel >= 1.3
+%{?with_libunwind:BuildRequires:	libunwind-devel}
+BuildRequires:	libwacom-devel >= 0.20
+BuildRequires:	meson >= 0.41.0
+BuildRequires:	mtdev-devel >= 1.1.0
+BuildRequires:	ninja >= 1.5
+BuildRequires:	pkgconfig
+BuildRequires:	rpmbuild(macros) >= 1.728
+BuildRequires:	udev-devel
+BuildRequires:	valgrind
 %if %{with gui}
 BuildRequires:	cairo-devel
 BuildRequires:	glib2-devel >= 2.0
@@ -33,16 +43,6 @@ BuildRequires:	python3-recommonmark
 BuildRequires:	python3-sphinx_rtd_theme
 BuildRequires:	sphinx-pdg-3
 %endif
-BuildRequires:	libevdev-devel >= 1.3
-%{?with_libunwind:BuildRequires:	libunwind-devel}
-BuildRequires:	libwacom-devel >= 0.20
-BuildRequires:	meson >= 0.40.0
-BuildRequires:	mtdev-devel >= 1.1.0
-BuildRequires:	ninja >= 1.5
-BuildRequires:	pkgconfig
-BuildRequires:	rpmbuild(macros) >= 1.728
-BuildRequires:	udev-devel
-BuildRequires:	valgrind
 Requires:	libevdev >= 1.3
 Requires:	libwacom >= 0.20
 Requires:	mtdev >= 1.1.0
@@ -124,7 +124,9 @@ Dokumentacja API biblioteki libinput.
 %prep
 %setup -q
 
-%{__sed} -i -e '1s,/usr/bin/env python3,%{__python3},' tools/libinput-measure-{touchpad-pressure,touch-size,touchpad-tap}.py
+%{__sed} -i -e '1s,/usr/bin/env python3,%{__python3},' \
+	tools/libinput-measure-{fuzz,touchpad-pressure,touch-size,touchpad-tap}.py \
+	tools/libinput-replay
 
 %build
 %meson build \
