@@ -13,12 +13,12 @@
 Summary:	Input device library
 Summary(pl.UTF-8):	Biblioteka urządzeń wejściowych
 Name:		libinput
-Version:	1.12.3
+Version:	1.12.4
 Release:	1
 License:	MIT
 Group:		Libraries
 Source0:	https://www.freedesktop.org/software/libinput/%{name}-%{version}.tar.xz
-# Source0-md5:	083d6bf311d5e1e3a62440dc634bb8f0
+# Source0-md5:	8d3c7a7467a45a3ba544d1a745267d38
 URL:		https://www.freedesktop.org/wiki/Software/libinput/
 BuildRequires:	check-devel >= 0.9.10
 BuildRequires:	libevdev-devel >= 1.3
