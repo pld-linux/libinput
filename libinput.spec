@@ -142,6 +142,8 @@ rm -rf $RPM_BUILD_ROOT
 
 %meson_install -C build
 
+%{__rm} $RPM_BUILD_ROOT%{_mandir}/man1/libinput-test-suite.1
+
 %clean
 rm -rf $RPM_BUILD_ROOT
 
