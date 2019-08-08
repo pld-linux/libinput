@@ -13,12 +13,12 @@
 Summary:	Input device library
 Summary(pl.UTF-8):	Biblioteka urządzeń wejściowych
 Name:		libinput
-Version:	1.13.4
+Version:	1.14.0
 Release:	1
 License:	MIT
 Group:		Libraries
 Source0:	https://www.freedesktop.org/software/libinput/%{name}-%{version}.tar.xz
-# Source0-md5:	9ef817774bb5b4006cba95e34103e82c
+# Source0-md5:	1c33d49fc7985926eab877e3de9c17eb
 URL:		https://www.freedesktop.org/wiki/Software/libinput/
 BuildRequires:	check-devel >= 0.9.10
 BuildRequires:	libevdev-devel >= 1.3
@@ -168,9 +168,9 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_libexecdir}/libinput/libinput-record
 %attr(755,root,root) %{_libexecdir}/libinput/libinput-replay
 %attr(755,root,root) /lib/udev/libinput-device-group
-%attr(755,root,root) /lib/udev/libinput-model-quirks
+%attr(755,root,root) /lib/udev/libinput-fuzz-override
 /lib/udev/rules.d/80-libinput-device-groups.rules
-/lib/udev/rules.d/90-libinput-model-quirks.rules
+/lib/udev/rules.d/90-libinput-fuzz-override.rules
 %dir %{_datadir}/libinput
 %{_datadir}/libinput/*.quirks
 %{_mandir}/man1/libinput.1*
