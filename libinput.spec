@@ -13,12 +13,12 @@
 Summary:	Input device library
 Summary(pl.UTF-8):	Biblioteka urządzeń wejściowych
 Name:		libinput
-Version:	1.14.0
+Version:	1.14.1
 Release:	1
 License:	MIT
 Group:		Libraries
 Source0:	https://www.freedesktop.org/software/libinput/%{name}-%{version}.tar.xz
-# Source0-md5:	1c33d49fc7985926eab877e3de9c17eb
+# Source0-md5:	da29a704dc6f7ea2d5aac754db046340
 URL:		https://www.freedesktop.org/wiki/Software/libinput/
 BuildRequires:	check-devel >= 0.9.10
 BuildRequires:	libevdev-devel >= 1.3
@@ -121,6 +121,19 @@ API documentation for libinput library.
 %description apidocs -l pl.UTF-8
 Dokumentacja API biblioteki libinput.
 
+%package -n zsh-completion-%{name}
+Summary:	Zsh completion for libinput command
+Summary(pl.UTF-8):	Dopełnianie parametrów w zsh dla polecenia libinput
+Group:		Applications/Shells
+Requires:	%{name} = %{epoch}:%{version}-%{release}
+Requires:	zsh
+
+%description -n zsh-completion-%{name}
+Zsh completion for libinput command.
+
+%description -n zsh-completion-%{name} -l pl.UTF-8
+Dopełnianie parametrów w zsh dla polecenia libinput.
+
 %prep
 %setup -q
 
@@ -132,7 +145,8 @@ Dokumentacja API biblioteki libinput.
 %meson build \
 	-Ddebug-gui=%{__true_false gui} \
 	-Ddocumentation=%{__true_false doc} \
-	-Dudev-dir=/lib/udev
+	-Dudev-dir=/lib/udev \
+	-Dzshcompletiondir=%{zsh_compdir}
 %meson_build -C build
 
 %{?with_tests:%meson_test -C build}
@@ -205,3 +219,7 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %doc build/api/*
 %endif
+
+%files -n zsh-completion-%{name}
+%defattr(644,root,root,755)
+%{zsh_compdir}/_libinput
