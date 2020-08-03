@@ -13,12 +13,12 @@
 Summary:	Input device library
 Summary(pl.UTF-8):	Biblioteka urządzeń wejściowych
 Name:		libinput
-Version:	1.15.6
+Version:	1.16.0
 Release:	1
 License:	MIT
 Group:		Libraries
 Source0:	https://www.freedesktop.org/software/libinput/%{name}-%{version}.tar.xz
-# Source0-md5:	b2388a1d6f0dcc944b49bc7239a53be8
+# Source0-md5:	b518dae7f603040872739216971ee97b
 URL:		https://www.freedesktop.org/wiki/Software/libinput/
 BuildRequires:	check-devel >= 0.9.10
 BuildRequires:	libevdev-devel >= 1.3
@@ -139,7 +139,7 @@ Dopełnianie parametrów w zsh dla polecenia libinput.
 
 %{__sed} -i -e '1s,/usr/bin/env python3,%{__python3},' \
 	tools/libinput-measure-{fuzz,touchpad-pressure,touch-size,touchpad-tap}.py \
-	tools/libinput-replay
+	tools/libinput-{replay,analyze-per-slot-delta.py,measure-touchpad-size.py}
 
 %build
 %meson build \
@@ -171,12 +171,15 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_libdir}/libinput.so.*.*.*
 %attr(755,root,root) %ghost %{_libdir}/libinput.so.10
 %dir %{_libexecdir}/libinput
+%attr(755,root,root) %{_libexecdir}/libinput/libinput-analyze
+%attr(755,root,root) %{_libexecdir}/libinput/libinput-analyze-per-slot-delta
 %attr(755,root,root) %{_libexecdir}/libinput/libinput-debug-events
 %attr(755,root,root) %{_libexecdir}/libinput/libinput-debug-tablet
 %attr(755,root,root) %{_libexecdir}/libinput/libinput-list-devices
 %attr(755,root,root) %{_libexecdir}/libinput/libinput-measure
 %attr(755,root,root) %{_libexecdir}/libinput/libinput-measure-fuzz
 %attr(755,root,root) %{_libexecdir}/libinput/libinput-measure-touchpad-pressure
+%attr(755,root,root) %{_libexecdir}/libinput/libinput-measure-touchpad-size
 %attr(755,root,root) %{_libexecdir}/libinput/libinput-measure-touchpad-tap
 %attr(755,root,root) %{_libexecdir}/libinput/libinput-measure-touch-size
 %attr(755,root,root) %{_libexecdir}/libinput/libinput-quirks
@@ -190,12 +193,15 @@ rm -rf $RPM_BUILD_ROOT
 %dir %{_datadir}/libinput
 %{_datadir}/libinput/*.quirks
 %{_mandir}/man1/libinput.1*
+%{_mandir}/man1/libinput-analyze.1*
+%{_mandir}/man1/libinput-analyze-per-slot-delta.1*
 %{_mandir}/man1/libinput-debug-events.1*
 %{_mandir}/man1/libinput-debug-tablet.1*
 %{_mandir}/man1/libinput-list-devices.1*
 %{_mandir}/man1/libinput-measure.1*
 %{_mandir}/man1/libinput-measure-fuzz.1*
 %{_mandir}/man1/libinput-measure-touchpad-pressure.1*
+%{_mandir}/man1/libinput-measure-touchpad-size.1*
 %{_mandir}/man1/libinput-measure-touchpad-tap.1*
 %{_mandir}/man1/libinput-measure-touch-size.1*
 %{_mandir}/man1/libinput-quirks.1*
