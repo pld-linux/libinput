@@ -24,11 +24,11 @@ BuildRequires:	check-devel >= 0.9.10
 BuildRequires:	libevdev-devel >= 1.3
 %{?with_libunwind:BuildRequires:	libunwind-devel}
 BuildRequires:	libwacom-devel >= 0.20
-BuildRequires:	meson >= 0.41.0
+BuildRequires:	meson >= 0.45.0
 BuildRequires:	mtdev-devel >= 1.1.0
 BuildRequires:	ninja >= 1.5
 BuildRequires:	pkgconfig
-BuildRequires:	rpmbuild(macros) >= 1.728
+BuildRequires:	rpmbuild(macros) >= 1.736
 BuildRequires:	udev-devel
 BuildRequires:	valgrind
 %if %{with gui}
@@ -111,7 +111,7 @@ Statyczna biblioteka libinput.
 Summary:	API documentation for libinput library
 Summary(pl.UTF-8):	Dokumentacja API biblioteki libinput
 Group:		Documentation
-%if "%{_rpmversion}" >= "5"
+%if "%{_rpmversion}" >= "4.6"
 BuildArch:	noarch
 %endif
 
@@ -147,14 +147,15 @@ Dopełnianie parametrów w zsh dla polecenia libinput.
 	-Ddocumentation=%{__true_false doc} \
 	-Dudev-dir=/lib/udev \
 	-Dzshcompletiondir=%{zsh_compdir}
-%meson_build -C build
 
-%{?with_tests:%meson_test -C build}
+%ninja_build -C build
+
+%{?with_tests:%ninja_test -C build}
 
 %install
 rm -rf $RPM_BUILD_ROOT
 
-%meson_install -C build
+%ninja_install -C build
 
 %{__rm} $RPM_BUILD_ROOT%{_mandir}/man1/libinput-test-suite.1
 
