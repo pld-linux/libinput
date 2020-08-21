@@ -95,18 +95,6 @@ that use libinput.
 Ten pakiet zawiera pliki nagłówkowe niezbędne do tworzenia aplikacji
 wykorzystujących bibliotekę libinput.
 
-%package static
-Summary:	Static libinput library
-Summary(pl.UTF-8):	Statyczna biblioteka libinput
-Group:		Development/Libraries
-Requires:	%{name}-devel = %{version}-%{release}
-
-%description static
-Static libinput library.
-
-%description static -l pl.UTF-8
-Statyczna biblioteka libinput.
-
 %package apidocs
 Summary:	API documentation for libinput library
 Summary(pl.UTF-8):	Dokumentacja API biblioteki libinput
