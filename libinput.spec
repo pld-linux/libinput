@@ -28,7 +28,7 @@ BuildRequires:	meson >= 0.45.0
 BuildRequires:	mtdev-devel >= 1.1.0
 BuildRequires:	ninja >= 1.5
 BuildRequires:	pkgconfig
-BuildRequires:	rpmbuild(macros) >= 1.736
+BuildRequires:	rpmbuild(macros) >= 1.752
 BuildRequires:	udev-devel
 BuildRequires:	valgrind
 %if %{with gui}
@@ -99,9 +99,7 @@ wykorzystujących bibliotekę libinput.
 Summary:	API documentation for libinput library
 Summary(pl.UTF-8):	Dokumentacja API biblioteki libinput
 Group:		Documentation
-%if "%{_rpmversion}" >= "4.6"
-BuildArch:	noarch
-%endif
+%{?noarchpackage}
 
 %description apidocs
 API documentation for libinput library.
