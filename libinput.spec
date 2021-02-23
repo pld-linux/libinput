@@ -29,8 +29,10 @@ BuildRequires:	mtdev-devel >= 1.1.0
 BuildRequires:	ninja >= 1.5
 BuildRequires:	pkgconfig
 BuildRequires:	rpmbuild(macros) >= 1.752
+BuildRequires:	tar >= 1:1.22
 BuildRequires:	udev-devel
 BuildRequires:	valgrind
+BuildRequires:	xz
 %if %{with gui}
 BuildRequires:	cairo-devel
 BuildRequires:	glib2-devel >= 2.0
