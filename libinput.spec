@@ -101,7 +101,7 @@ wykorzystujących bibliotekę libinput.
 Summary:	API documentation for libinput library
 Summary(pl.UTF-8):	Dokumentacja API biblioteki libinput
 Group:		Documentation
-%{?noarchpackage}
+BuildArch:	noarch
 
 %description apidocs
 API documentation for libinput library.
