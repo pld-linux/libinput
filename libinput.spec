@@ -3,6 +3,7 @@
 #
 # Conditional build:
 %bcond_without	gui		# libinput-debug-gui
+%bcond_with	gtk4		# build libinput-debug-gui with gtk4
 %bcond_without	libunwind	# libunwind debugging support
 %bcond_without	doc		# documentation
 %bcond_without	tests		# tests
@@ -13,18 +14,18 @@
 Summary:	Input device library
 Summary(pl.UTF-8):	Biblioteka urządzeń wejściowych
 Name:		libinput
-Version:	1.18.1
+Version:	1.19.0
 Release:	1
 License:	MIT
 Group:		Libraries
 Source0:	https://www.freedesktop.org/software/libinput/%{name}-%{version}.tar.xz
-# Source0-md5:	17057507ddbcad69ecc5de0dd9a05e47
+# Source0-md5:	8e0600a296584f8d65d4ca1a82cd4a02
 URL:		https://www.freedesktop.org/wiki/Software/libinput/
 BuildRequires:	check-devel >= 0.9.10
 BuildRequires:	libevdev-devel >= 1.3
 %{?with_libunwind:BuildRequires:	libunwind-devel}
 BuildRequires:	libwacom-devel >= 0.20
-BuildRequires:	meson >= 0.45.0
+BuildRequires:	meson >= 0.49.0
 BuildRequires:	mtdev-devel >= 1.1.0
 BuildRequires:	ninja >= 1.5
 BuildRequires:	pkgconfig
@@ -36,7 +37,14 @@ BuildRequires:	xz
 %if %{with gui}
 BuildRequires:	cairo-devel
 BuildRequires:	glib2-devel >= 2.0
+%if %{with gtk4}
+BuildRequires:	gtk+4-devel >= 4.0
+%else
 BuildRequires:	gtk+3-devel >= 3.20
+%endif
+BuildRequires:	wayland-devel
+BuildRequires:	wayland-protocols
+BuildRequires:	xorg-lib-libX11-devel
 %endif
 %if %{with doc}
 BuildRequires:	doxygen >= 1.8.3
@@ -44,6 +52,9 @@ BuildRequires:	graphviz >= 2.26.0
 BuildRequires:	python3-recommonmark
 BuildRequires:	python3-sphinx_rtd_theme
 BuildRequires:	sphinx-pdg-3
+%endif
+%if %{with gui} && %{without gtk4}
+BuildConflicts:	gtk+4-devel
 %endif
 Requires:	libevdev >= 1.3
 Requires:	libwacom >= 0.20
@@ -74,7 +85,11 @@ Summary:	Debugging GUI for libinput
 Summary(pl.UTF-8):	Graficzny interfejs diagnostyczny do libinput
 Group:		X11/Applications
 Requires:	%{name} = %{version}-%{release}
+%if %{with gtk4}
+Requires:	gtk+4 >= 4.0
+%else
 Requires:	gtk+3 >= 3.20
+%endif
 
 %description gui
 Debugging GUI for libinput.
