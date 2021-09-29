@@ -29,7 +29,9 @@ BuildRequires:	meson >= 0.49.0
 BuildRequires:	mtdev-devel >= 1.1.0
 BuildRequires:	ninja >= 1.5
 BuildRequires:	pkgconfig
+BuildRequires:	rpm-build >= 4.6
 BuildRequires:	rpmbuild(macros) >= 1.752
+BuildRequires:	sed >= 4.0
 BuildRequires:	tar >= 1:1.22
 BuildRequires:	udev-devel
 BuildRequires:	valgrind
@@ -52,9 +54,6 @@ BuildRequires:	graphviz >= 2.26.0
 BuildRequires:	python3-recommonmark
 BuildRequires:	python3-sphinx_rtd_theme
 BuildRequires:	sphinx-pdg-3
-%endif
-%if %{with gui} && %{without gtk4}
-BuildConflicts:	gtk4-devel
 %endif
 Requires:	libevdev >= 1.3
 Requires:	libwacom >= 0.20
@@ -144,6 +143,10 @@ Dopełnianie parametrów w zsh dla polecenia libinput.
 	tools/libinput-analyze-{per-slot-delta,recording,touch-down-state}.py \
 	tools/libinput-measure-{fuzz,touchpad-pressure,touch-size,touchpad-tap}.py \
 	tools/libinput-{replay,measure-touchpad-size}.py
+
+%if %{without gtk4}
+%{__sed} -i -e "/dependency('gtk4'/ s/'gtk4'/'gtk4-disabled'/" meson.build
+%endif
 
 %build
 %meson build \
