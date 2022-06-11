@@ -14,12 +14,12 @@
 Summary:	Input device library
 Summary(pl.UTF-8):	Biblioteka urządzeń wejściowych
 Name:		libinput
-Version:	1.20.1
+Version:	1.21.0
 Release:	1
 License:	MIT
 Group:		Libraries
 Source0:	https://gitlab.freedesktop.org/libinput/libinput/-/archive/%{version}/%{name}-%{version}.tar.bz2
-# Source0-md5:	e86c9cdb3a928d747b191a0910f69d9e
+# Source0-md5:	3b5aaea6ebe1902dec089174b24ad2b3
 URL:		https://www.freedesktop.org/wiki/Software/libinput/
 BuildRequires:	check-devel >= 0.9.10
 BuildRequires:	libevdev-devel >= 1.3
@@ -195,6 +195,7 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_libexecdir}/libinput/libinput-quirks
 %attr(755,root,root) %{_libexecdir}/libinput/libinput-record
 %attr(755,root,root) %{_libexecdir}/libinput/libinput-replay
+%attr(755,root,root) %{_libexecdir}/libinput/libinput-test
 %attr(755,root,root) /lib/udev/libinput-device-group
 %attr(755,root,root) /lib/udev/libinput-fuzz-extract
 %attr(755,root,root) /lib/udev/libinput-fuzz-to-zero
@@ -221,6 +222,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_mandir}/man1/libinput-quirks-validate.1*
 %{_mandir}/man1/libinput-record.1*
 %{_mandir}/man1/libinput-replay.1*
+%{_mandir}/man1/libinput-test.1*
 
 %if %{with gui}
 %files gui
