@@ -14,12 +14,12 @@
 Summary:	Input device library
 Summary(pl.UTF-8):	Biblioteka urządzeń wejściowych
 Name:		libinput
-Version:	1.22.1
+Version:	1.23.0
 Release:	1
 License:	MIT
 Group:		Libraries
 Source0:	https://gitlab.freedesktop.org/libinput/libinput/-/archive/%{version}/%{name}-%{version}.tar.bz2
-# Source0-md5:	88b742b261a36064753ce62ddd0dc71e
+# Source0-md5:	dea612151f5792df73f01c49197b6b41
 URL:		https://www.freedesktop.org/wiki/Software/libinput/
 BuildRequires:	check-devel >= 0.9.10
 BuildRequires:	libevdev-devel >= 1.3
@@ -141,6 +141,7 @@ Dopełnianie parametrów w zsh dla polecenia libinput.
 
 %{__sed} -i -e '1s,/usr/bin/env python3,%{__python3},' \
 	tools/libinput-analyze-{per-slot-delta,recording,touch-down-state}.py \
+	tools/libinput-list-kernel-devices.py \
 	tools/libinput-measure-{fuzz,touchpad-pressure,touch-size,touchpad-tap}.py \
 	tools/libinput-{replay,measure-touchpad-size}.py
 
@@ -186,6 +187,7 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_libexecdir}/libinput/libinput-debug-events
 %attr(755,root,root) %{_libexecdir}/libinput/libinput-debug-tablet
 %attr(755,root,root) %{_libexecdir}/libinput/libinput-list-devices
+%attr(755,root,root) %{_libexecdir}/libinput/libinput-list-kernel-devices
 %attr(755,root,root) %{_libexecdir}/libinput/libinput-measure
 %attr(755,root,root) %{_libexecdir}/libinput/libinput-measure-fuzz
 %attr(755,root,root) %{_libexecdir}/libinput/libinput-measure-touchpad-pressure
@@ -211,6 +213,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_mandir}/man1/libinput-debug-events.1*
 %{_mandir}/man1/libinput-debug-tablet.1*
 %{_mandir}/man1/libinput-list-devices.1*
+%{_mandir}/man1/libinput-list-kernel-devices.1*
 %{_mandir}/man1/libinput-measure.1*
 %{_mandir}/man1/libinput-measure-fuzz.1*
 %{_mandir}/man1/libinput-measure-touchpad-pressure.1*
