@@ -129,6 +129,7 @@ Summary(pl.UTF-8):	Dopełnianie parametrów w zsh dla polecenia libinput
 Group:		Applications/Shells
 Requires:	%{name} = %{epoch}:%{version}-%{release}
 Requires:	zsh
+BuildArch:	noarch
 
 %description -n zsh-completion-%{name}
 Zsh completion for libinput command.
