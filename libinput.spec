@@ -154,6 +154,7 @@ Dopełnianie parametrów w zsh dla polecenia libinput.
 %meson build \
 	-Ddebug-gui=%{__true_false gui} \
 	-Ddocumentation=%{__true_false doc} \
+	-Dtests=%{__true_false tests} \
 	-Dudev-dir=/lib/udev \
 	-Dzshcompletiondir=%{zsh_compdir}
 
@@ -166,7 +167,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %ninja_install -C build
 
-%{__rm} $RPM_BUILD_ROOT%{_mandir}/man1/libinput-test-suite.1
+%{?with_tests:%{__rm} $RPM_BUILD_ROOT%{_mandir}/man1/libinput-test-suite.1}
 
 %clean
 rm -rf $RPM_BUILD_ROOT
