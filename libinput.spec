@@ -34,7 +34,7 @@ BuildRequires:	rpmbuild(macros) >= 1.752
 BuildRequires:	sed >= 4.0
 BuildRequires:	tar >= 1:1.22
 BuildRequires:	udev-devel
-BuildRequires:	valgrind
+%{?with_tests:BuildRequires:	valgrind}
 BuildRequires:	xz
 %if %{with gui}
 BuildRequires:	cairo-devel
