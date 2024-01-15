@@ -14,18 +14,18 @@
 Summary:	Input device library
 Summary(pl.UTF-8):	Biblioteka urządzeń wejściowych
 Name:		libinput
-Version:	1.24.0
+Version:	1.25.0
 Release:	1
 License:	MIT
 Group:		Libraries
 Source0:	https://gitlab.freedesktop.org/libinput/libinput/-/archive/%{version}/%{name}-%{version}.tar.bz2
-# Source0-md5:	8d724524eec973aac894564d01b7aae6
+# Source0-md5:	ab452d2dac4edc5d0eff21a329d2869a
 URL:		https://www.freedesktop.org/wiki/Software/libinput/
 BuildRequires:	check-devel >= 0.9.10
 BuildRequires:	libevdev-devel >= 1.3
 %{?with_libunwind:BuildRequires:	libunwind-devel}
 BuildRequires:	libwacom-devel >= 0.20
-BuildRequires:	meson >= 0.49.0
+BuildRequires:	meson >= 0.56.0
 BuildRequires:	mtdev-devel >= 1.1.0
 BuildRequires:	ninja >= 1.5
 BuildRequires:	pkgconfig
