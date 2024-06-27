@@ -14,12 +14,12 @@
 Summary:	Input device library
 Summary(pl.UTF-8):	Biblioteka urządzeń wejściowych
 Name:		libinput
-Version:	1.26.0
+Version:	1.26.1
 Release:	1
 License:	MIT
 Group:		Libraries
 Source0:	https://gitlab.freedesktop.org/libinput/libinput/-/archive/%{version}/%{name}-%{version}.tar.bz2
-# Source0-md5:	eaddffed073f10f54f60e515c95f28ab
+# Source0-md5:	bb8c70a35e35a4eb10b6791eef6810b9
 URL:		https://www.freedesktop.org/wiki/Software/libinput/
 BuildRequires:	check-devel >= 0.9.10
 BuildRequires:	libevdev-devel >= 1.3
@@ -141,7 +141,7 @@ Dopełnianie parametrów w zsh dla polecenia libinput.
 %setup -q
 
 %{__sed} -i -e '1s,/usr/bin/env python3,%{__python3},' \
-	tools/libinput-analyze-{per-slot-delta,recording,touch-down-state}.py \
+	tools/libinput-analyze-{buttons,per-slot-delta,recording,touch-down-state}.py \
 	tools/libinput-list-kernel-devices.py \
 	tools/libinput-measure-{fuzz,touchpad-pressure,touch-size,touchpad-tap}.py \
 	tools/libinput-{replay,measure-touchpad-size}.py
@@ -183,6 +183,7 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %ghost %{_libdir}/libinput.so.10
 %dir %{_libexecdir}/libinput
 %attr(755,root,root) %{_libexecdir}/libinput/libinput-analyze
+%attr(755,root,root) %{_libexecdir}/libinput/libinput-analyze-buttons
 %attr(755,root,root) %{_libexecdir}/libinput/libinput-analyze-per-slot-delta
 %attr(755,root,root) %{_libexecdir}/libinput/libinput-analyze-recording
 %attr(755,root,root) %{_libexecdir}/libinput/libinput-analyze-touch-down-state
@@ -209,6 +210,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_datadir}/libinput/*.quirks
 %{_mandir}/man1/libinput.1*
 %{_mandir}/man1/libinput-analyze.1*
+%{_mandir}/man1/libinput-analyze-buttons.1*
 %{_mandir}/man1/libinput-analyze-per-slot-delta.1*
 %{_mandir}/man1/libinput-analyze-recording.1*
 %{_mandir}/man1/libinput-analyze-touch-down-state.1*
