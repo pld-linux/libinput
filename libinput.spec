@@ -30,7 +30,7 @@ BuildRequires:	mtdev-devel >= 1.1.0
 BuildRequires:	ninja >= 1.5
 BuildRequires:	pkgconfig
 BuildRequires:	rpm-build >= 4.6
-BuildRequires:	rpmbuild(macros) >= 1.752
+BuildRequires:	rpmbuild(macros) >= 2.042
 BuildRequires:	sed >= 4.0
 BuildRequires:	tar >= 1:1.22
 BuildRequires:	udev-devel
@@ -151,21 +151,21 @@ Dopełnianie parametrów w zsh dla polecenia libinput.
 %endif
 
 %build
-%meson build \
+%meson \
 	-Ddebug-gui=%{__true_false gui} \
 	-Ddocumentation=%{__true_false doc} \
 	-Dtests=%{__true_false tests} \
 	-Dudev-dir=/lib/udev \
 	-Dzshcompletiondir=%{zsh_compdir}
 
-%ninja_build -C build
+%meson_build
 
-%{?with_tests:%ninja_test -C build}
+%{?with_tests:%meson_test}
 
 %install
 rm -rf $RPM_BUILD_ROOT
 
-%ninja_install -C build
+%meson_install
 
 %{?with_tests:%{__rm} $RPM_BUILD_ROOT%{_mandir}/man1/libinput-test-suite.1}
 
