@@ -60,6 +60,10 @@ Requires:	libwacom >= 2.15.0
 Requires:	mtdev >= 1.1.0
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
+# libinput-util.h:31
+# #warning "libinput relies on assert(). #defining NDEBUG is not recommended"
+%define		filterout_cpp	-DNDEBUG
+
 %description
 libinput is a library that handles input devices for display servers
 and other applications that need to directly deal with input devices.
