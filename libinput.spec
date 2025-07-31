@@ -14,15 +14,15 @@
 Summary:	Input device library
 Summary(pl.UTF-8):	Biblioteka urządzeń wejściowych
 Name:		libinput
-Version:	1.28.1
+Version:	1.29.0
 Release:	1
 License:	MIT
 Group:		Libraries
 Source0:	https://gitlab.freedesktop.org/libinput/libinput/-/archive/%{version}/%{name}-%{version}.tar.bz2
-# Source0-md5:	46c03c86af4fe454238f37bc880d30d4
+# Source0-md5:	dd36ab03f4fd0c7e1b5b5c51e01dfe91
 URL:		https://www.freedesktop.org/wiki/Software/libinput/
 BuildRequires:	check-devel >= 0.9.10
-BuildRequires:	libevdev-devel >= 1.3
+BuildRequires:	libevdev-devel >= 1.10.0
 %{?with_libunwind:BuildRequires:	libunwind-devel}
 BuildRequires:	libwacom-devel >= 2.15.0
 BuildRequires:	meson >= 0.56.0
@@ -55,7 +55,7 @@ BuildRequires:	python3-recommonmark
 BuildRequires:	python3-sphinx_rtd_theme
 BuildRequires:	sphinx-pdg-3
 %endif
-Requires:	libevdev >= 1.3
+Requires:	libevdev >= 1.10.0
 Requires:	libwacom >= 2.15.0
 Requires:	mtdev >= 1.1.0
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
@@ -193,6 +193,7 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_libexecdir}/libinput/libinput-analyze-touch-down-state
 %attr(755,root,root) %{_libexecdir}/libinput/libinput-debug-events
 %attr(755,root,root) %{_libexecdir}/libinput/libinput-debug-tablet
+%attr(755,root,root) %{_libexecdir}/libinput/libinput-debug-tablet-pad
 %attr(755,root,root) %{_libexecdir}/libinput/libinput-list-devices
 %attr(755,root,root) %{_libexecdir}/libinput/libinput-list-kernel-devices
 %attr(755,root,root) %{_libexecdir}/libinput/libinput-measure
@@ -220,6 +221,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_mandir}/man1/libinput-analyze-touch-down-state.1*
 %{_mandir}/man1/libinput-debug-events.1*
 %{_mandir}/man1/libinput-debug-tablet.1*
+%{_mandir}/man1/libinput-debug-tablet-pad.1*
 %{_mandir}/man1/libinput-list-devices.1*
 %{_mandir}/man1/libinput-list-kernel-devices.1*
 %{_mandir}/man1/libinput-measure.1*
