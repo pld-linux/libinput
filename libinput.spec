@@ -29,6 +29,7 @@ BuildRequires:	meson >= 0.56.0
 BuildRequires:	mtdev-devel >= 1.1.0
 BuildRequires:	ninja >= 1.5
 BuildRequires:	pkgconfig
+%{?with_tests:BuildRequires:	python3-pytest}
 BuildRequires:	rpm-build >= 4.6
 BuildRequires:	rpmbuild(macros) >= 2.042
 BuildRequires:	sed >= 4.0
@@ -164,7 +165,10 @@ Dopełnianie parametrów w zsh dla polecenia libinput.
 
 %meson_build
 
-%{?with_tests:%meson_test}
+%if %{with tests}
+export PYTEST_DISABLE_PLUGIN_AUTOLOAD=1
+%meson_test
+%endif
 
 %install
 rm -rf $RPM_BUILD_ROOT
