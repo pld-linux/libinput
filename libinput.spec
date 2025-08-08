@@ -30,6 +30,7 @@ BuildRequires:	mtdev-devel >= 1.1.0
 BuildRequires:	ninja >= 1.5
 BuildRequires:	pkgconfig
 %{?with_tests:BuildRequires:	python3-pytest}
+%{?with_tests:BuildRequires:	python3-pytest-xdist}
 BuildRequires:	rpm-build >= 4.6
 BuildRequires:	rpmbuild(macros) >= 2.042
 BuildRequires:	sed >= 4.0
@@ -167,6 +168,8 @@ Dopełnianie parametrów w zsh dla polecenia libinput.
 
 %if %{with tests}
 export PYTEST_DISABLE_PLUGIN_AUTOLOAD=1
+export PYTEST_PLUGINS=xdist
+export FDO_CI_CONCURRENT="%{__jobs}"
 %meson_test
 %endif
 
