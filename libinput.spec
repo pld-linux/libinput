@@ -20,6 +20,7 @@ License:	MIT
 Group:		Libraries
 Source0:	https://gitlab.freedesktop.org/libinput/libinput/-/archive/%{version}/%{name}-%{version}.tar.bz2
 # Source0-md5:	dd36ab03f4fd0c7e1b5b5c51e01dfe91
+Patch0:		tests-32bit.patch
 URL:		https://www.freedesktop.org/wiki/Software/libinput/
 BuildRequires:	check-devel >= 0.9.10
 BuildRequires:	libevdev-devel >= 1.10.0
@@ -145,6 +146,7 @@ Dopełnianie parametrów w zsh dla polecenia libinput.
 
 %prep
 %setup -q
+%patch -P0 -p1
 
 %{__sed} -i -e '1s,/usr/bin/env python3,%{__python3},' \
 	tools/libinput-analyze-{buttons,per-slot-delta,recording,touch-down-state}.py \

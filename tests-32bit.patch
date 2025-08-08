@@ -1,0 +1,63 @@
+From 931dad76a90c46036374196c617ca6aca0d27fe9 Mon Sep 17 00:00:00 2001
+From: Adam Sampson <ats@offog.org>
+Date: Fri, 1 Aug 2025 13:11:50 +0100
+Subject: [PATCH 1/2] test: correct value type in atou64_test
+
+This needs to be an unsigned 64-bit value, given the constants that are
+stored in this field below; unsigned long is 32 bits on some platforms
+(e.g. ia32).
+
+Part-of: <https://gitlab.freedesktop.org/libinput/libinput/-/merge_requests/1288>
+---
+ test/test-utils.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/test/test-utils.c b/test/test-utils.c
+index 55a2e156..7c938b0a 100644
+--- a/test/test-utils.c
++++ b/test/test-utils.c
+@@ -1445,7 +1445,7 @@ END_TEST
+ struct atou64_test {
+ 	char *str;
+ 	bool success;
+-	unsigned long val;
++	uint64_t val;
+ };
+ 
+ START_TEST(safe_atou64_test)
+-- 
+GitLab
+
+
+From 47d4c563f4eacc9557904c3bf9bccfce519581b0 Mon Sep 17 00:00:00 2001
+From: Adam Sampson <ats@offog.org>
+Date: Fri, 1 Aug 2025 14:50:36 +0100
+Subject: [PATCH 2/2] evdev: remove duplicate sizeof
+
+This looks like a copy-and-paste error. In practice it was harmless on
+64-bit systems because evdev_event happens to be 64 bits long, but on
+32-bit systems it would allocate too little memory.
+
+Found by GCC 15 with _FORTIFY_SOURCE=3 on ia32.
+
+Part-of: <https://gitlab.freedesktop.org/libinput/libinput/-/merge_requests/1288>
+---
+ src/evdev-frame.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/src/evdev-frame.h b/src/evdev-frame.h
+index 965dbc24..ccf6f385 100644
+--- a/src/evdev-frame.h
++++ b/src/evdev-frame.h
+@@ -509,7 +509,7 @@ static inline struct evdev_frame *
+ evdev_frame_new(size_t max_size)
+ {
+ 	struct evdev_frame *frame =
+-		zalloc(max_size * sizeof(sizeof(*frame->events)) + sizeof(*frame));
++		zalloc(max_size * sizeof(*frame->events) + sizeof(*frame));
+ 
+ 	frame->refcount = 1;
+ 	frame->max_size = max_size;
+-- 
+GitLab
+
