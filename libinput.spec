@@ -14,19 +14,19 @@
 Summary:	Input device library
 Summary(pl.UTF-8):	Biblioteka urządzeń wejściowych
 Name:		libinput
-Version:	1.29.2
+Version:	1.30.0
 Release:	1
 License:	MIT
 Group:		Libraries
 Source0:	https://gitlab.freedesktop.org/libinput/libinput/-/archive/%{version}/%{name}-%{version}.tar.bz2
-# Source0-md5:	e44967192ded9b0e2cb095bf5e9ccdfe
-Patch0:		tests-32bit.patch
+# Source0-md5:	f5f14586fed63b0825218c87b16b9c20
 URL:		https://www.freedesktop.org/wiki/Software/libinput/
 BuildRequires:	check-devel >= 0.9.10
 BuildRequires:	libevdev-devel >= 1.10.0
 %{?with_libunwind:BuildRequires:	libunwind-devel}
 BuildRequires:	libwacom-devel >= 2.15.0
-BuildRequires:	meson >= 0.56.0
+BuildRequires:	lua54-devel
+BuildRequires:	meson >= 0.64.0
 BuildRequires:	mtdev-devel >= 1.1.0
 BuildRequires:	ninja >= 1.5
 BuildRequires:	pkgconfig
@@ -146,7 +146,6 @@ Dopełnianie parametrów w zsh dla polecenia libinput.
 
 %prep
 %setup -q
-%patch -P0 -p1
 
 %{__sed} -i -e '1s,/usr/bin/env python3,%{__python3},' \
 	tools/libinput-analyze-{buttons,per-slot-delta,recording,touch-down-state}.py \
