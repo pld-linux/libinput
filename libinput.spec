@@ -52,7 +52,7 @@ BuildRequires:	wayland-protocols
 BuildRequires:	xorg-lib-libX11-devel
 %endif
 %if %{with doc}
-BuildRequires:	doxygen >= 1.8.3
+BuildRequires:	doxygen >= 1:1.8.3
 BuildRequires:	graphviz >= 2.26.0
 BuildRequires:	python3-recommonmark
 BuildRequires:	python3-sphinx_rtd_theme
